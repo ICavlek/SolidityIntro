@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "@ganache/console.log/console.sol";
+
 contract Spacebear is ERC721, Ownable {
     using Counters for Counters.Counter;
 
@@ -18,7 +20,8 @@ contract Spacebear is ERC721, Ownable {
 
     function buyToken() public payable {
         uint256 tokenId = _tokenIdCounter.current();
-        require(msg.value == tokenId * 0.1 ether, "Wrong amount of funds sent");
+        console.log("Got here", tokenId, msg.value);
+        require(msg.value == (tokenId + 1) * 0.1 ether, "Wrong amount of funds sent");
         _tokenIdCounter.increment();
         _safeMint(msg.sender, tokenId);
     }
